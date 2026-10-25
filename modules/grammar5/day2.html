@@ -1,0 +1,43 @@
+<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"/><title>语法 Day2 · 单三加 s + 单复数 + this/that</title>
+<style>
+:root{--bg:#f4f5f7;--card:#fff;--fg:#1b1d22;--mut:#6b7280;--ac:#4f6bed;--good:#16a34a;--bad:#dc2626;--bd:#e5e7eb}
+@media(prefers-color-scheme:dark){:root{--bg:#111318;--card:#1b1e25;--fg:#e8eaf0;--mut:#9aa3b2;--bd:#2a2f3a}}
+*{box-sizing:border-box}body{margin:0;font:16px/1.6 -apple-system,"PingFang SC",system-ui,sans-serif;background:var(--bg);color:var(--fg);padding:12px 12px 40px}
+h1{font-size:19px;margin:4px 0}.mut{color:var(--mut);font-size:13px}
+.seg{display:flex;gap:6px;margin:10px 0;position:sticky;top:0;background:var(--bg);padding:6px 0;z-index:2}.seg button{flex:1}
+button{font:inherit;min-height:44px;border-radius:12px;border:1px solid var(--bd);background:var(--card);color:var(--fg);padding:0 12px}
+button.on,button.pri{background:var(--ac);color:#fff;border-color:var(--ac)}
+.card{background:var(--card);border:1px solid var(--bd);border-radius:16px;padding:14px;margin:10px 0}.card h3{margin:0 0 6px;font-size:16px}
+.w{display:flex;align-items:center;gap:8px;border-top:1px solid var(--bd);padding:8px 0}.w:first-child{border:0}.w .e{font-weight:600;flex:1}.w.ok .e::after{content:" ✓";color:var(--good)}
+input{font:inherit;width:100%;min-height:48px;border:1px solid var(--bd);border-radius:12px;padding:0 12px;background:var(--card);color:var(--fg)}
+.big{font-size:22px;font-weight:700;margin:6px 0}.good{color:var(--good)}.bad{color:var(--bad)}code{background:#8882;padding:1px 4px;border-radius:4px}
+.row{display:flex;gap:8px;margin-top:10px}.row button{flex:1}
+</style></head><body>
+<h1 id="t"></h1><div class="mut" id="src"></div>
+<div class="seg" id="seg"></div><div id="v"></div>
+<div class="card"><p class="mut" style="margin:0 0 8px">学完后点下面按钮：会自动把计划里对应的任务勾为完成。</p><button class="pri" id="done" style="width:100%">✓ 我学完了，标记本节完成</button></div>
+<script>
+"use strict";
+const DATA={"title": "语法 Day2 · 单三加 s + 单复数 + this/that", "key": "grammar5_d2", "src": "grammar_course/daily_plan.md（语法老师）", "cards": [["知识点", "KP5 名词单复数、KP6 单三加s、KP7 冠词、KP8 this/that/these/those"], ["今日小课", "主语是单个的第三方（he/she/it/Mike/这只猫）时，动词后加 s。名词“几个”要说清楚：多个加 s。名词前戴一顶“帽子”：a/the/this/these。"], ["今日合计", "10 题"]], "words": [], "qs": [["P1-08 Mike 买一辆车（买=buy，一辆车=a car）", "Mike buys a car."], ["P1-04 她喂狗。（喂=feed，狗=dog）", "She feeds the dog."], ["P1-07 这只猫喜欢我（猫=cat，喜欢=like）", "This cat likes me."], ["P1-13 这条狗咬你们（狗=dog，咬=bite）", "This dog bites you."], ["P1-16 我给他许多笔（给=give，笔=pen）", "I give him the pens."], ["P1-06 他们讨厌这个计划（讨厌=hate，计划=plan）", "They hate this plan."], ["P1-14 这些鸟吃虫子（鸟=bird，吃=eat，虫子=bug）", "The birds eat the bug."], ["P1-03 他们帮助我们。（帮助=help）", "They help us."], ["P1-17 你打他们（打=hit）", "You hit them."], ["P1-20 我想念它们（想念=miss）", "I miss them."]]};const K='lee-kit-'+DATA.key;
+let S;try{S=JSON.parse(localStorage.getItem(K))||{}}catch(e){S={}}S.m=S.m||{};S.q=S.q||{};
+const sv=()=>localStorage.setItem(K,JSON.stringify(S));const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const say=w=>{try{const u=new SpeechSynthesisUtterance(w);u.lang='en-US';u.rate=.85;speechSynthesis.cancel();speechSynthesis.speak(u)}catch(e){}};
+document.getElementById('t').textContent=DATA.title;document.getElementById('src').textContent='来源：'+DATA.src;
+const tabs=[['k','知识点']];if(DATA.words.length)tabs.push(['w','单词'],['s','拼写练习']);if(DATA.qs.length)tabs.push(['q','练习题']);
+let cur=(location.hash.slice(1)||'k');if(!tabs.some(t=>t[0]===cur))cur='k';let si=0;
+function R(){document.getElementById('seg').innerHTML=tabs.map(([k,l])=>`<button data-k="${k}" class="${k===cur?'on':''}">${l}</button>`).join('');
+ document.querySelectorAll('[data-k]').forEach(b=>b.onclick=()=>{cur=b.dataset.k;R()});const v=document.getElementById('v');
+ if(cur==='k')v.innerHTML=DATA.cards.map(([h,b])=>`<div class="card"><h3>${esc(h)}</h3><div>${b}</div></div>`).join('');
+ if(cur==='w'){const n=DATA.words.filter(w=>S.m[w[0]]).length;v.innerHTML=`<div class="card"><div class="mut">已掌握 ${n}/${DATA.words.length}（拼写答对即掌握）· 点 🔊 听发音</div>${DATA.words.map(([e,z])=>`<div class="w ${S.m[e]?'ok':''}"><span class="e">${esc(e)}</span><span class="mut">${esc(z)}</span><button data-say="${esc(e)}" aria-label="发音">🔊</button></div>`).join('')}</div>`;v.querySelectorAll('[data-say]').forEach(b=>b.onclick=()=>say(b.dataset.say))}
+ if(cur==='s'){const left=DATA.words.filter(w=>!S.m[w[0]]);if(!left.length){v.innerHTML=`<div class="card"><div class="big good">全部掌握 🎉</div><button id="rs">重新练一遍</button></div>`;v.querySelector('#rs').onclick=()=>{S.m={};sv();R()};return}
+  const w=left[si%left.length];v.innerHTML=`<div class="card"><div class="mut">剩余 ${left.length} 个 · 看中文写英文</div><div class="big">${esc(w[1])}</div><input id="ip" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="输入英文"/><div id="fb" style="min-height:28px;margin-top:6px"></div><div class="row"><button id="hint">🔊 提示</button><button class="pri" id="ck">检查</button><button id="nx">跳过</button></div></div>`;
+  const ip=v.querySelector('#ip');const norm=s=>s.trim().toLowerCase().replace(/[’']/g,"'").replace(/\s+/g,' ');
+  v.querySelector('#hint').onclick=()=>say(w[0]);v.querySelector('#nx').onclick=()=>{si++;R()};
+  const ck=()=>{if(norm(ip.value)===norm(w[0])){S.m[w[0]]=1;sv();say(w[0]);v.querySelector('#fb').innerHTML='<span class="good">✓ 正确！</span>';setTimeout(R,700)}else{v.querySelector('#fb').innerHTML=`<span class="bad">✗ 正确：${esc(w[0])}</span>`;si++}};
+  v.querySelector('#ck').onclick=ck;ip.onkeydown=e=>{if(e.key==='Enter')ck()}}
+ if(cur==='q'){const ok=Object.values(S.q).filter(x=>x==='ok').length;v.innerHTML=`<div class="card mut">先在纸上/心里写出英文，再点“看答案”自评。答对 ${ok}/${DATA.qs.length}</div>`+DATA.qs.map(([z,e],i)=>`<div class="card"><div>${i+1}. ${esc(z)}</div><div class="ans" hidden><b>${esc(e)}</b> <button data-say="${esc(e)}">🔊</button></div><div class="row"><button data-show="${i}">看答案</button><button data-q="${i}" data-r="ok" class="${S.q[i]==='ok'?'on':''}">✓ 对了</button><button data-q="${i}" data-r="bad" class="${S.q[i]==='bad'?'on':''}">✗ 错了</button></div></div>`).join('');
+  v.querySelectorAll('[data-show]').forEach(b=>b.onclick=()=>{b.closest('.card').querySelector('.ans').hidden=false});v.querySelectorAll('[data-say]').forEach(b=>b.onclick=()=>say(b.dataset.say));
+  v.querySelectorAll('[data-q]').forEach(b=>b.onclick=()=>{S.q[b.dataset.q]=b.dataset.r;sv();R()})}}
+R();
+document.getElementById('done').onclick=()=>{S.doneAt=new Date().toISOString();sv();if(parent!==window)parent.postMessage({type:'lee-module-done'},location.origin);else alert('已记录完成（在 Lee悦时间安排 App 内打开可自动勾选计划任务）')};
+</script></body></html>
